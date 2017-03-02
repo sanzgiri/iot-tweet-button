@@ -14,12 +14,9 @@
   "keywords": [
     "iot",
     "aws",
-    "reinvent",
-    "internet",
-    "of",
-    "things",
-    "button"
+    "button",
+    "tweeter"
   ],
-  "author": "Dan Russell",
-  "license": "ISC"
+  "author": "Ashutosh Sanzgiri",
+  "license": "MIT"
 }

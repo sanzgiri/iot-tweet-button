@@ -1,4 +1,5 @@
 var Twitter = require('twitter');
+const config = require('./config.json');
 
 //DotEnv allows us to create a .env file to hold our private credentials in lieu of environment variables that can't be set in AWS Lambda
 require('dotenv').load();
@@ -14,18 +15,16 @@ var client = new Twitter({
 //This is the function we're invoking in Lambda
 exports.handler = function(event, context) {
 
-	//Make the clickType returned from the IoT JSON a little prettier
-	var pressType = "Once";
+	var myTweet = config.tweet.single;
 
 	if (event.clickType == "DOUBLE") {
-		pressType = "Twice"
+	    myTweet = config.tweet.double;
 	} else if (event.clickType == "LONG") {
-		pressType = "for a really long time"
+	    myTweet = config.tweet.long;
 	}
 
-	//Prep the status (tweet) message
-	var myTweet = 'Someone just pushed my button '+pressType+'!  (BatteryLife: '+event.batteryVoltage+', Timestamp: '+Date()+')';
-
+        myTweet += ' The time is now: '+Date();
+	
 	//Post the new status update
 	client.post('statuses/update', {status: myTweet }, function(error, tweet, response){
 	  if (!error) {
